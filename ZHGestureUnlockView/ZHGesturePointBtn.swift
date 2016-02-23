@@ -55,7 +55,10 @@ class ZHGesturePointBtn: UIButton {
   }
   
   required init?(coder aDecoder: NSCoder) {
-    print("增加了LOG")
+    print("增加了一个LOG")
+    
+    print("增加了第二个LOG")
+    
     fatalError("init(coder:) has not been implemented")
   }
 }
