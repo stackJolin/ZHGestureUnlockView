@@ -55,7 +55,6 @@ class ZHGesturePointBtn: UIButton {
   }
   
   required init?(coder aDecoder: NSCoder) {
-    
     print("增加了一个LOG")
     
     print("增加了第二个LOG")
