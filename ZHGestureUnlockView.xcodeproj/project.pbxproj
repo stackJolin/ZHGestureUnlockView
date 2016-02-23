@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE4300851C7ADB1D00B14011 /* ZHGesturePointBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4300841C7ADB1D00B14011 /* ZHGesturePointBtn.swift */; settings = {ASSET_TAGS = (); }; };
 		CE43FF5C1C75CA6700B14011 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE43FF5B1C75CA6700B14011 /* AppDelegate.swift */; };
 		CE43FF5E1C75CA6700B14011 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE43FF5D1C75CA6700B14011 /* ViewController.swift */; };
 		CE43FF611C75CA6700B14011 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE43FF5F1C75CA6700B14011 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE4300841C7ADB1D00B14011 /* ZHGesturePointBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHGesturePointBtn.swift; sourceTree = "<group>"; };
 		CE43FF581C75CA6700B14011 /* ZHGestureUnlockView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZHGestureUnlockView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE43FF5B1C75CA6700B14011 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE43FF5D1C75CA6700B14011 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				CE43FF641C75CA6700B14011 /* LaunchScreen.storyboard */,
 				CE43FF671C75CA6700B14011 /* Info.plist */,
 				CE43FF891C75CB1D00B14011 /* ZHGestureUnlockView.swift */,
+				CE4300841C7ADB1D00B14011 /* ZHGesturePointBtn.swift */,
 			);
 			path = ZHGestureUnlockView;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE43FF5E1C75CA6700B14011 /* ViewController.swift in Sources */,
+				CE4300851C7ADB1D00B14011 /* ZHGesturePointBtn.swift in Sources */,
 				CE43FF5C1C75CA6700B14011 /* AppDelegate.swift in Sources */,
 				CE43FF8A1C75CB1D00B14011 /* ZHGestureUnlockView.swift in Sources */,
 			);
@@ -404,6 +408,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ZHGestureUnlockView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stackJolin.www.ZHGestureUnlockView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -415,6 +420,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ZHGestureUnlockView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stackJolin.www.ZHGestureUnlockView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -488,6 +494,7 @@
 				CE43FF821C75CA6700B14011 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CE43FF831C75CA6700B14011 /* Build configuration list for PBXNativeTarget "ZHGestureUnlockViewTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +503,7 @@
 				CE43FF851C75CA6700B14011 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CE43FF861C75CA6700B14011 /* Build configuration list for PBXNativeTarget "ZHGestureUnlockViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +512,7 @@
 				CE43FF881C75CA6700B14011 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

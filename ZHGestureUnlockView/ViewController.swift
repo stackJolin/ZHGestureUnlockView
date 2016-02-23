@@ -9,19 +9,34 @@
 import UIKit
 
 class ViewController: UIViewController {
-  var pwd1:String?
-  let gestureView:ZHGestureUnlockView = ZHGestureUnlockView(frame: CGRectMake(0, 100, 300, 300))
+  var pwd1:String? = "012"
+  let gestureView:ZHGestureUnlockView = ZHGestureUnlockView(frame: CGRectMake(0, 100, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.width))
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.addSubview(gestureView)
     
-    gestureView.setGesturePasswordClosure = {[weak self] (pwd: String) -> () in
+//    gestureView.setGesturePasswordClosure = {[weak self] (pwd: String) -> () in
+//      if pwd != "" {
+//        print("ddd")
+//        self!.pwd1 = pwd
+//        self!.getAlerController()
+//      }
+//    }
+    gestureView.matchGesturePasswordClosure = { [weak self] (pwd:String) -> Bool in
       if pwd != "" {
-        print("ddd")
-        self!.pwd1 = pwd
-        self!.getAlerController()
+        if self?.pwd1 == pwd {
+          //self!.getAlerController()
+          return true
+        }
+        else{
+          return false
+        }
       }
+      else{
+        return false
+      }
+
     }
   }
   

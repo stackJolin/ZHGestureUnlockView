@@ -12,9 +12,14 @@ let btnW: CGFloat = 74
 let btnH: CGFloat = btnW
 let colCount: Int = 3
 
+
+
+
 class ZHGestureUnlockView: UIView {
-  private var lineBtns: [UIButton] = [UIButton]()
+  private var lineBtns: [ZHGesturePointBtn] = [ZHGesturePointBtn]()
   private var currentPoint: CGPoint?
+  
+  private var pwdIsCorrect:Bool = true
   
   /// 需要注意的是不要讲下面这两个闭包写在同一个文件中
   // 匹配手势密码是否正确
@@ -25,7 +30,7 @@ class ZHGestureUnlockView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = UIColor.blackColor()
+    self.backgroundColor = UIColor.clearColor()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -33,22 +38,19 @@ class ZHGestureUnlockView: UIView {
   }
   
   // 这样声明可以声明动态的数组吗，下面这种声明
-  private lazy var btns: [UIButton] = {
-    var buttons: [UIButton] = [UIButton]()
+  private lazy var btns: [ZHGesturePointBtn] = {
+    var buttons: [ZHGesturePointBtn] = [ZHGesturePointBtn]()
     for i in 0..<btnCount {
-      let btn: UIButton = self.addBtn()
+      let btn: ZHGesturePointBtn = self.addBtn()
       btn.tag = i
       print(i)
       buttons.append(btn)
     }
     return buttons
   }()
-  private func addBtn() -> UIButton {
-    let btn: UIButton = UIButton()
+  private func addBtn() -> ZHGesturePointBtn {
+    let btn: ZHGesturePointBtn = ZHGesturePointBtn()
     btn.userInteractionEnabled = false
-    btn.setBackgroundImage(UIImage(named: "gesture_node_normal"), forState: UIControlState.Normal)
-    btn.setBackgroundImage(UIImage(named: "gesture_node_highlighted"), forState: UIControlState.Highlighted)
-    btn.setBackgroundImage(UIImage(named: "gesture_node_error"), forState: UIControlState.Selected)
     self.addSubview(btn)
     return btn
   }
@@ -63,9 +65,9 @@ extension ZHGestureUnlockView {
     
     // 遍历所有的btn
     for i in 0..<self.btns.count {
-      let btn: UIButton = self.btns[i]
+      let btn: ZHGesturePointBtn = self.btns[i]
       if CGRectContainsPoint(btn.frame, currentPoint) {
-        btn.highlighted = true
+        btn.modifyPointBtnState = .JoinState
         self.lineBtns.append(btn)
       }
     }
@@ -77,10 +79,10 @@ extension ZHGestureUnlockView {
     let currentPoint: CGPoint = touch.locationInView(touch.view)
     self.currentPoint = currentPoint
     for i in 0..<self.btns.count {
-      let btn: UIButton = self.btns[i]
+      let btn: ZHGesturePointBtn = self.btns[i]
       if CGRectContainsPoint(btn.frame, currentPoint) {
         if !self.lineBtns.contains(btn) {
-          btn.highlighted = true
+          btn.modifyPointBtnState = .JoinState
           self.lineBtns.append(btn)
           self.setNeedsDisplay()
         }
@@ -96,7 +98,7 @@ extension ZHGestureUnlockView {
     var pwd: String = ""
     for i in 0..<self.lineBtns.count {
       print(self.lineBtns.count)
-      let btn: UIButton = self.lineBtns[i]
+      let btn: ZHGesturePointBtn = self.lineBtns[i]
       pwd = pwd + "\(btn.tag)"
     }
     
@@ -114,10 +116,10 @@ extension ZHGestureUnlockView {
         print("ddd")
       }
       else {
+        pwdIsCorrect = false
         // 密码匹配失败
         for (_, btn) in self.lineBtns.enumerate() {
-          btn.highlighted = false
-          btn.selected = true
+          btn.modifyPointBtnState = .ErrorState
         }
         self.userInteractionEnabled = false
         let alert: UIAlertController = UIAlertController(title: nil, message: "密码错误", preferredStyle: UIAlertControllerStyle.Alert)
@@ -135,8 +137,8 @@ extension ZHGestureUnlockView {
   private func clear() {
     
     for i in 0..<self.btns.count {
-      self.btns[i].selected = false
-      self.btns[i].highlighted = false
+      pwdIsCorrect = true
+      self.btns[i].modifyPointBtnState = .NormalState
     }
     self.lineBtns.removeAll()
   }
@@ -145,13 +147,14 @@ extension ZHGestureUnlockView {
   override func layoutSubviews() {
     
     super.layoutSubviews()
-    let margin: CGFloat = (self.frame.size.width - CGFloat(colCount) * btnW) * 0.25
+    let margin: CGFloat = (self.frame.width - 120) / 2
     
     for i in 0..<self.btns.count {
       
-      let btnX: CGFloat = (CGFloat(i) % CGFloat(colCount)) * (margin + btnW) + margin
-      let btnY: CGFloat = CGFloat((i / colCount)) * (margin + btnW) + margin
-      self.btns[i].frame = CGRectMake(btnX, btnY, btnW, btnH)
+      let btnCenterX: CGFloat = (CGFloat(i) % CGFloat(colCount)) * margin + 60
+      let btnCenterY: CGFloat = CGFloat(i / colCount) * margin + 60
+      self.btns[i].center = CGPointMake(btnCenterX, btnCenterY)
+      self.btns[i].bounds.size = CGSizeMake(40, 40)
     }
   }
   
@@ -161,7 +164,7 @@ extension ZHGestureUnlockView {
     let path: UIBezierPath = UIBezierPath()
     // 遍历需要画线的数组
     for i in 0..<self.lineBtns.count {
-      let btn: UIButton = self.lineBtns[i]
+      let btn: ZHGesturePointBtn = self.lineBtns[i]
       if i == 0 {
         path.moveToPoint(btn.center)
       }
@@ -175,8 +178,10 @@ extension ZHGestureUnlockView {
       path.addLineToPoint(self.currentPoint!)
     }
     
-    UIColor.whiteColor().set()
-    path.lineWidth = 10
+    let lineColor:UIColor = pwdIsCorrect ? UIColor.blueColor() : UIColor.redColor()
+    
+    lineColor.set()
+    path.lineWidth = 2.5
     path.lineCapStyle = .Round
     path.lineJoinStyle = .Round
     path.stroke()
